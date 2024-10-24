@@ -13,10 +13,8 @@ This is an AutoHotkey script that helps organize windows across virtual desktops
 
 1. Install [AutoHotkey v2.0](https://www.autohotkey.com/) or later
 2. Clone/download this repository
-3. Copy `desktop_mappings.ini.example` to `desktop_mappings.ini`
-4. Copy `pinned_windows.txt.example` to `pinned_windows.txt`
-5. Run `VirtualDesktopManager.ahk`
-6. Configure your rules in the GUI
+3. Run `VirtualDesktopManager.ahk`
+4. Configure your rules in the GUI
 
 ## 📝 Configuration Examples
 
