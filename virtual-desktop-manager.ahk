@@ -29,7 +29,7 @@ global pinnedWindowsList := ""
 global windowInfoText := ""
 global statusBar := ""
 global errorLog := ""
-global autoApplyEnabled := false
+global autoApplyEnabled := true
 
 ; Add window event handling
 SetTimer MonitorWindows, 1000  ; Check every second when auto-apply is enabled
