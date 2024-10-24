@@ -31,6 +31,21 @@ global statusBar := ""
 global errorLog := ""
 global autoApplyEnabled := true
 
+; Create tray menu
+A_TrayMenu.Delete  ; Clear the default menu
+A_TrayMenu.Add("Show Manager", ShowMappingsGui)
+A_TrayMenu.Add("Apply Mappings", ApplyCurrentMappings)
+A_TrayMenu.Add()  ; Separator
+A_TrayMenu.Add("Auto-Apply", ToggleAutoApplyFromTray)
+if (autoApplyEnabled)
+    A_TrayMenu.Check("Auto-Apply")
+A_TrayMenu.Add()  ; Separator
+A_TrayMenu.Add("Exit", (*) => ExitApp())
+A_TrayMenu.Default := "Show Manager"
+
+; Set custom tray icon tooltip
+A_IconTip := "Virtual Desktop Manager"
+
 ; Add window event handling
 SetTimer MonitorWindows, 1000  ; Check every second when auto-apply is enabled
 
@@ -506,8 +521,13 @@ ApplyMappings(mappings, pinnedWindows) {
 }
 
 ; Create and show main GUI
-ShowMappingsGui() {
+ShowMappingsGui(*) {
     global mappingsGui, mappingsText, pinnedWindowsList, windowInfoText, statusBar, errorLog, autoApplyEnabled
+    
+    if (mappingsGui) {
+        mappingsGui.Show  ; If GUI exists, just show it
+        return
+    }
     
     ; Load both mappings and pinned windows
     mappings := LoadMappings()
@@ -526,6 +546,9 @@ ShowMappingsGui() {
     }
     
     mappingsGui := Gui("+Resize", "Virtual Desktop Manager")
+    
+    ; Add minimize to tray behavior
+    mappingsGui.OnEvent("Close", GuiClose)
     
     ; Mappings text area
     mappingsGui.Add("Text", "x10 y10", "Window Mappings (format: window_pattern|desktop_number):")
@@ -572,6 +595,25 @@ ShowMappingsGui() {
     mappingsGui.Show()
     UpdateStatusBar()
     RefreshWindowInfo()
+}
+
+GuiClose(*) {
+    global mappingsGui
+    mappingsGui.Hide()  ; Hide instead of destroying
+    return true  ; Prevent default close behavior
+}
+
+ToggleAutoApplyFromTray(*) {
+    global autoApplyEnabled
+    autoApplyEnabled := !autoApplyEnabled
+    if (autoApplyEnabled) {
+        A_TrayMenu.Check("Auto-Apply")
+        LogError("Auto-apply enabled from tray")
+        ApplyCurrentMappings()
+    } else {
+        A_TrayMenu.Uncheck("Auto-Apply")
+        LogError("Auto-apply disabled from tray")
+    }
 }
 
 ; Handle GUI resize
