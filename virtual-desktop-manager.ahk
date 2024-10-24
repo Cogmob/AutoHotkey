@@ -555,7 +555,7 @@ ShowMappingsGui() {
     mappingsGui.Add("Text", "x10 y410", "Current Windows and Desktops:")
     windowInfoText := mappingsGui.Add("Edit", "x10 y430 w450 h200 ReadOnly vWindowInfo")
     
-    mappingsGui.Add("Text", "x10 y640", "Error Log:")
+    mappingsGui.Add("Text", "x10 y640", "Log:")
     errorLog := mappingsGui.Add("Edit", "x10 y660 w450 h100 ReadOnly vErrorLog")
     
     ; Status Bar
