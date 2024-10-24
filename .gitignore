@@ -1,0 +1,30 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows shortcuts
+*.lnk
+
+# AutoHotkey compiled scripts
+*.exe
+
+# User-specific files
+desktop_mappings.ini
+pinned_windows.txt
+
+# Logs
+*.log
+
+# IDE specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
